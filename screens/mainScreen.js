@@ -8,3 +8,5 @@ export default function MainScreen({navigation}) {
     </View>
     )
 }
+
+/* hi its my first time using git so haha*/
