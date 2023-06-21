@@ -1,21 +1,34 @@
 import { Button, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import data from '../data.js'
+import { db } from '../config'
+import { ref, set, onValue } from "firebase/database";
 
 export default function ShoppingList({navigation}) {
-  const [shoppingList, setshoppingList] = useState(data)
+  const [shoppingList, setshoppingList] = useState()
+
+  useEffect (() => {
+    const testRef = ref(db, 'shoppinglists/');
+    onValue(testRef, (snapshot) => {
+        const data = Object.keys(snapshot.val()).map((abc) => {
+          return ({name:abc, list: snapshot.val()[abc]})
+        });
+        setshoppingList(data)
+        console.log(data)
+    }) 
+  }, []) 
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <SafeAreaView>
           <FlatList 
-            data={shoppingList}
+            data={shoppingList}            
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => {navigation.navigate('Item List', {data: item.details})}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('Item List', {itemname: item.name})}}>
                 <View style={styles.item}>
-                  <Text>{item.text}{"\n"}
-                  {Object.keys(item.details).length ? <View><Text>Number of items: {Object.keys(item.details).length}</Text></View> : null}</Text> 
+                  <Text>{item.name}{"\n"}
+                  {Object.keys(item.list).length ? <View><Text>Number of items: {Object.keys(item.list).length}</Text></View> : null}</Text> 
                   {/* return null if details does not exist, otherwise prints 'Number of items: length of details dict ' */}
                 </View> 
               </TouchableOpacity>
