@@ -9,4 +9,5 @@ export default function MainScreen({navigation}) {
     )
 }
 
-/* hi its my first time using git so haha*/
+/* hi its my first time using git so haha
+im trying to get used to this*/
