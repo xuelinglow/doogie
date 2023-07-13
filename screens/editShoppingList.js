@@ -5,7 +5,7 @@ import { db } from '../config';
 import { ref, push, set, onValue, remove, update } from 'firebase/database';
 
 export default function EditList({ route, navigation }) {
-  const { listname } = route.params;git 
+  const { listname } = route.params;
   const [groceryList, setGroceryList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [text, setText] = useState('');
