@@ -1,11 +1,11 @@
 import { Button, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import data from '../data.js'
 import { db } from '../config'
 import { ref, set, onValue } from "firebase/database";
+import { useNavigation } from '@react-navigation/native';
 
 export default function ShoppingList({navigation}) {
-  const [shoppingList, setshoppingList] = useState()
+  const [shoppingList, setshoppingList] = useState();
 
   useEffect (() => {
     const testRef = ref(db, 'shoppinglists/');
@@ -14,7 +14,6 @@ export default function ShoppingList({navigation}) {
           return ({name:abc, list: snapshot.val()[abc]})
         });
         setshoppingList(data)
-        console.log(data)
     }) 
   }, []) 
 
@@ -25,7 +24,7 @@ export default function ShoppingList({navigation}) {
           <FlatList 
             data={shoppingList}            
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => {navigation.navigate('Item List', {itemname: item.name})}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('Item List', {listname: item.name})}}>
                 <View style={styles.item}>
                   <Text>{item.name}{"\n"}
                   {Object.keys(item.list).length ? <View><Text>Number of items: {Object.keys(item.list).length}</Text></View> : null}</Text> 
@@ -58,3 +57,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
 });
+
