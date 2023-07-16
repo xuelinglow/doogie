@@ -1,6 +1,6 @@
 import { Button, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, {useState} from 'react';
-import data from '../data.js'
+//import data from '../data.js'
 
 export default function ShoppingList({navigation}) {
   const [shoppingList, setshoppingList] = useState(data)
